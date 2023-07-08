@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "node index.js",
-    "devmon": "nodemon index.js"
+    "devmon": "nodemon index.js",
+    "devsub": "node ./plugins/skillNote-analysis.js"
   },
   "keywords": [],
   "author": "keruru",

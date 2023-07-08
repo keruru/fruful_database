@@ -19,41 +19,64 @@ axios(URL)
         const html = response.data
         const $ = load(html)
 
-        // let charaId = 154
-        // let charaDetail = $('[id^="chara_detail_'+charaId+'"]', html)
-        let charaDetail = $('.table_chara_detail', html)
-        let thead = charaDetail.find('thead span').children().text().split("　")
-        let rank = thead[0].match(/\d+/)[0]
-        let name = thead[1]
-        let charaId = charaDetail.parent().attr('id').match(/\d+/)[0]
-        let hp = charaDetail.find('tbody tr:nth-child(2) td:nth-child(3)').text().trim().replace(/,/g, '')
-        let minHp = hp.match(/\d+/)[0]
-        let maxHp = hp.match(/\d+/g)[1]
-        let mp = charaDetail.find('tbody tr:nth-child(3) td:nth-child(2)').text().trim().replace(/,/g, '')
-        let minMp = mp.match(/\d+/)[0]
-        let maxMp = mp.match(/\d+/g)[1]
-        let atk = charaDetail.find('tbody tr:nth-child(4) td:nth-child(2)').text().trim().replace(/,/g, '')
-        let minAtk = atk.match(/\d+/)[0]
-        let maxAtk = atk.match(/\d+/g)[1]
-        let def = charaDetail.find('tbody tr:nth-child(5) td:nth-child(2)').text().trim().replace(/,/g, '')
-        let minDef = def.match(/\d+/)[0]
-        let maxDef = def.match(/\d+/g)[1]
-        let nSkill = charaDetail.find('tbody tr:nth-child(6) td:nth-child(2)')
-        let nSkill_name = nSkill.find('.skill_name').text()
-        let nSkill_note = nSkill.find('.skill_note').text()
-        let eSkill = charaDetail.find('tbody tr:nth-child(7) td:nth-child(2)')
-        let eSkill_name = eSkill.find('.skill_name').text()
-        let eSkill_note = eSkill.find('.skill_note').text()
-        let a_nSkill = charaDetail.find('tbody tr:nth-child(8) td:nth-child(2)')
-        let a_nSkill_name = a_nSkill.find('.skill_name').text()
-        let a_nSkill_note = a_nSkill.find('.skill_note').text()
-        let a_eSkill = charaDetail.find('tbody tr:nth-child(9) td:nth-child(2)')
-        let a_eSkill_name = a_eSkill.find('.skill_name').text()
-        let a_eSkill_note = a_eSkill.find('.skill_note').text()
+        // const charaId = 154
+        // const charaDetail = $('[id^="chara_detail_'+charaId+'"]', html)
+        const charaDetail = $('.table_chara_detail', html)
+        const thead = 
+            charaDetail.find('thead span')
+            .children()
+            .text().split(/\s+/)
+        const rank = thead[0].match(/\d+/)[0]
+        const name = thead[1]
+        const charaId =
+            charaDetail.parent()
+            .attr('id')
+            .match(/\d+/)[0]
+        const element =
+            charaDetail.find('tbody tr:nth-child(2) .chara_frame img')
+            .attr('src')
+            .match(/_([a-zA-Z]+)[_\.]/)[1]
+        const hp = 
+            charaDetail.find('tbody tr:nth-child(2) td:nth-child(3)')
+            .text().trim()
+            .replace(/,/g, '')
+        const minHp = hp.match(/\d+/)[0]
+        const maxHp = hp.match(/\d+/g)[1]
+        const mp = 
+            charaDetail.find('tbody tr:nth-child(3) td:nth-child(2)')
+            .text().trim()
+            .replace(/,/g, '')
+        const minMp = mp.match(/\d+/)[0]
+        const maxMp = mp.match(/\d+/g)[1]
+        const atk = 
+            charaDetail.find('tbody tr:nth-child(4) td:nth-child(2)')
+            .text().trim()
+            .replace(/,/g, '')
+        const minAtk = atk.match(/\d+/)[0]
+        const maxAtk = atk.match(/\d+/g)[1]
+        const def = 
+            charaDetail.find('tbody tr:nth-child(5) td:nth-child(2)')
+            .text().trim()
+            .replace(/,/g, '')
+        const minDef = def.match(/\d+/)[0]
+        const maxDef = def.match(/\d+/g)[1]
+        const nSkill = charaDetail.find('tbody tr:nth-child(6) td:nth-child(2)')
+        const nSkill_name = nSkill.find('.skill_name').text()
+        const nSkill_note = nSkill.find('.skill_note').text()
+        const eSkill = charaDetail.find('tbody tr:nth-child(7) td:nth-child(2)')
+        const eSkill_name = eSkill.find('.skill_name').text()
+        const eSkill_note = eSkill.find('.skill_note').text()
+        const a_nSkill = charaDetail.find('tbody tr:nth-child(8) td:nth-child(2)')
+        const a_nSkill_name = a_nSkill.find('.skill_name').text()
+        const a_nSkill_note = a_nSkill.find('.skill_note').text()
+        const a_eSkill = charaDetail.find('tbody tr:nth-child(9) td:nth-child(2)')
+        const a_eSkill_name = a_eSkill.find('.skill_name').text()
+        const a_eSkill_note = a_eSkill.find('.skill_note').text()
 
         console.log(`rank: ${rank}`)
         console.log(`name: ${name}`)
         console.log(`charaId: ${charaId}`)
+        console.log(`element: ${element}`)
         console.log(`minHp: ${minHp}`)
         console.log(`maxHp: ${maxHp}`)
         console.log(`minMp: ${minMp}`)
