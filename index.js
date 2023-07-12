@@ -1,5 +1,7 @@
+'use strict'
 import axios from 'axios'
 import { load } from 'cheerio'
+import skillNoteReader from './plugins/skill-note-reader.js'
 
 import express from 'express'
 import path from 'path'
@@ -19,8 +21,6 @@ axios(URL)
         const html = response.data
         const $ = load(html)
 
-        // const charaId = 154
-        // const charaDetail = $('[id^="chara_detail_'+charaId+'"]', html)
         const charaDetail = $('.table_chara_detail', html)
         const thead = 
             charaDetail.find('thead span')
@@ -93,7 +93,30 @@ axios(URL)
         console.log(`a_nSkill_note: ${a_nSkill_note}`)
         console.log(`a_eSkill_name: ${a_eSkill_name}`)
         console.log(`a_eSkill_note: ${a_eSkill_note}`)
-        
-        
+
+        let skillnotes = [nSkill_note, eSkill_note, a_nSkill_note, a_eSkill_note]
+        console.log(skillNoteReader.analyse(charaId, skillnotes))
+
+        // const sr = new skillnoteReader(charaId)
+        // const skillTable = sr.analyse(skillnotes)
+        /*
+        skillTable(Map[key, Map[key, value]])
+        skillTable = { //Map
+            attack :[ 
+                {id, category, target, range, num, type, power}, //Map
+                {id, category, target, range, num, type, power},
+                {id, category, ...}
+            ],
+            bad :[
+                {id, category, turn, target, range, num},
+                {id, category, turn, target, range, num},
+                {id, category, ...}
+            ],
+            guard :[...
+                {...}
+            ]
+        }
+        */
+
     }).catch(e => console.log(e))
 

@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "node index.js",
     "devmon": "nodemon index.js",
-    "devsub": "node ./plugins/skillNote-analysis.js"
+    "devsub": "node ./plugins/skillnote-reader.js",
+    "devtab": "node ./plugins/skill-table-template.js"
   },
   "keywords": [],
   "author": "keruru",
