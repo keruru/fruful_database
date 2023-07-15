@@ -1,0 +1,25 @@
+<div id="chara_detail_154EIH">
+<table class="table_chara_detail">
+<thead><tr><th class="th_header"><span>★5→★6　カノン(OVE)
+
+<tbody>
+<tr id="status_1">
+(HP)<td class="text_center" colspan="2">4,718 <span class="em01">(9,102)
+<tr id="status_2">
+(MP)<td class="text_center" colspan="2">948 <span class="em01">(948)
+<tr id="status_3">
+(攻)<td class="text_center" colspan="2">2,042 <span class="em01">(4,363)
+<tr id="status_4">
+(防)<td class="text_center" colspan="2">42 <span class="em01">(42)
+<tr id="status_5">
+(通常)<td colspan="6"><span class="em02"><div class="skill_name">ラフィナーレ
+<div class="skill_note">敵全体に4連撃の魔法小ダメージを与え、味方1体のHPを中回復させる。
+<tr id="status_6">
+(進化)<td colspan="6"><span class="em01"><div class="skill_name">カノンが一番☆
+<div class="skill_note">敵1体に9連撃の魔法大ダメージを与え、2ターン、自身の攻撃力を中アップさせる。
+<tr id="status7">
+(専用通常)<td colspan="6"><span class="em02"><div class="skill_name">ラフィナーレ＋
+<div class="skill_note">敵全体に6連撃の魔法中ダメージを与え、味方1体のHPを中回復させる。
+<tr id="status8">
+(専用進化)<td colspan="6"><span class="em01"><div class="skill_name">カノンが一番☆＋
+<div class="skill_note">敵1体に13連撃の魔法特大ダメージを与え、2ターン、自身の攻撃力を超特大アップさせる。さらに味方全体のMPを小回復させる。
