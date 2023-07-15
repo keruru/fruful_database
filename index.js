@@ -1,11 +1,12 @@
 'use strict'
 import axios from 'axios'
 import { load } from 'cheerio'
-import skillNoteReader from './plugins/skill-note-reader.js'
-
 import express from 'express'
 import path from 'path'
 import { fileURLToPath } from 'url'
+
+import skillnoteReader from './plugins/skill-note-reader.js'
+import charaSkillTable from './plugins/CharaSkillTable.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -20,6 +21,9 @@ axios(URL)
     .then(response => {
         const html = response.data
         const $ = load(html)
+
+        let skillTable = new Map()
+        let skillnotes = []
 
         const charaDetail = $('.table_chara_detail', html)
         const thead = 
@@ -94,8 +98,21 @@ axios(URL)
         console.log(`a_eSkill_name: ${a_eSkill_name}`)
         console.log(`a_eSkill_note: ${a_eSkill_note}`)
 
-        let skillnotes = [nSkill_note, eSkill_note, a_nSkill_note, a_eSkill_note]
-        console.log(skillNoteReader.analyse(charaId, skillnotes))
+
+        
+        skillnotes = [nSkill_note, eSkill_note, a_nSkill_note, a_eSkill_note]
+        let charaData = new skillnoteReader(charaId)
+        skillTable = charaData.analyse(skillnotes)
+
+        console.log(skillTable)
+
+        // const types = ["attack", "bad", "guard", "heal", "assist", "provoc"/*, "cons"*/]
+        // types.forEach((type) => {
+        //     if(skillTable.get(type).length !== 0) {
+        //         charaSkillTable.get(type).push(...skillTable.get(type))
+        //     }
+        // })
+
 
         // const sr = new skillnoteReader(charaId)
         // const skillTable = sr.analyse(skillnotes)
