@@ -1,6 +1,5 @@
 'use strict'
 import skillRecordFormat from './skill-record-format.js'
-import charaSkillTable from './CharaSkillTable.js'
 
 class skillnoteReader {
     constructor(charaId) {
@@ -13,19 +12,22 @@ class skillnoteReader {
             ["assist", skillnoteReader.assistRegex],
             ["provoc", skillnoteReader.provocRegex]
         ])
+        this.charaSkillTable = []
     }
 
     analyse(skillnotes) {
+        let skillTable = []
         let skillTypes = []
-        let skillTable = new Map()
         skillnotes.forEach((note, i_category) => {
             skillTypes = this._analyseSkillType(note)
             skillTable = this._analyseSkillEffect(
                 skillTypes, note, i_category
             )
+            this.charaSkillTable.push(...skillTable)
+            skillTable.length = 0
         })
         this._reset()
-        return skillTable
+        return this.charaSkillTable
     }
 
     _reset() {
@@ -60,8 +62,7 @@ class skillnoteReader {
     }
 
     _analyseSkillEffect(types, note, i_category) {
-        let skillTable = new Map()
-        let skillRecord = []
+        let skillTable = []
         let typeRegex = new RegExp()
         let effect = []
         let lastIdx = 0
@@ -72,15 +73,7 @@ class skillnoteReader {
             if(effect === null) {
                 console.assert(`キャラID: ${this.charaId} のスキルの効果が解析できません。`)
             }
-            
-            if(skillTable.get(type) !== undefined) {
-                skillRecord = skillTable.get(type) 
-            } else {
-                skillRecord.length = 0
-            }
-            skillRecord.push(this._formSkillRecord(i_category, type, effect))
-            skillTable.set(type, skillRecord)
-
+            skillTable.push(this._formSkillRecord(i_category, type, effect))
             lastIdx = typeRegex.lastIndex
         })
         return skillTable
@@ -91,6 +84,31 @@ class skillnoteReader {
         switch(type) {
             case "attack":
                 skillRecord = skillRecordFormat.getAttackRecord(
+                    this.charaId, i_category, effect
+                )
+            break
+            case "bad":
+                skillRecord = skillRecordFormat.getBadRecord(
+                    this.charaId, i_category, effect
+                )
+            break
+            case "guard":
+                skillRecord = skillRecordFormat.getGuardRecord(
+                    this.charaId, i_category, effect
+                )
+            break
+            case "heal":
+                skillRecord = skillRecordFormat.getHealRecord(
+                    this.charaId, i_category, effect
+                )
+            break
+            case "assist":
+                skillRecord = skillRecordFormat.getAssistRecord(
+                    this.charaId, i_category, effect
+                )
+            break
+            case "provoc":
+                skillRecord = skillRecordFormat.getProvocRecord(
                     this.charaId, i_category, effect
                 )
             break

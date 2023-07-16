@@ -1,9 +1,9 @@
 'use strict'
 class CharaSkillTable extends Map {
-    // Map:{ String, [ Map:{ String, any } ] }
+    // Map<String, [Map<String, any>]>
     constructor(array) {
         super()
-        const value = null // call by value
+        const value = null
         if(array !== undefined || Array.isArray(array)) {
             if(array.length === 0) return this
             array.forEach(key => {
@@ -17,24 +17,17 @@ class CharaSkillTable extends Map {
         if(this.get(key) !== undefined && Array.isArray(this.get(key))) {
             arrayObj = this.get(key)
             arrayObj.push(record)
-            this.set(key, arrayObj)
         } else {
             this.set(key, [record])
         }
         return this
     }
 
-    clear(key) {
-        if(Array.isArray(this.get(key))) {
-            this.get(key).length = 0
-        }
-        return this
-    }
 }
 
 export default CharaSkillTable
 
-// const test = new SkillnoteTable()
+// const test = new CharaSkillTable()
 // const addParam = new Map([
 //     ["CHARA_ID", 250],
 //     ["CATEGORY", 1]
@@ -58,7 +51,7 @@ export default CharaSkillTable
 // test.add("attack", addParam)
 // console.log(test)
 
-// const test2 = new SkillnoteTable(["attack", "bad"])
+// const test2 = new CharaSkillTable(["attack", "bad"])
 // const addParam3 = new Map([
 //     ["CHARA_ID", 253],
 //     ["CATEGORY", 3]

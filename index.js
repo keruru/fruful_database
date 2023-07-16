@@ -4,9 +4,10 @@ import { load } from 'cheerio'
 import express from 'express'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import { createObjectCsvWriter } from 'csv-writer'
 
-import skillnoteReader from './plugins/skill-note-reader.js'
-import charaSkillTable from './plugins/CharaSkillTable.js'
+import skillNoteReader from './plugins/skill-note-reader.js'
+import CharaSkillTable from './plugins/CharaSkillTable.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -22,7 +23,8 @@ axios(URL)
         const html = response.data
         const $ = load(html)
 
-        let skillTable = new Map()
+        let charaMasterData = {}
+        let skillTable = []
         let skillnotes = []
 
         const charaDetail = $('.table_chara_detail', html)
@@ -98,13 +100,56 @@ axios(URL)
         console.log(`a_eSkill_name: ${a_eSkill_name}`)
         console.log(`a_eSkill_note: ${a_eSkill_note}`)
 
+        charaMasterData = {
+            "RANK":rank, "NAME":name, "CID":charaId, "ELEM":element,
+            "MINHP":minHp, "MAXHP":maxHp, "MINMP":minMp, "MAXMP":maxMp,
+            "MINATK":minAtk, "MAXATK":maxAtk, "MINDEF":minDef, "MAXDEF":maxDef
+        }
 
-        
         skillnotes = [nSkill_note, eSkill_note, a_nSkill_note, a_eSkill_note]
-        let charaData = new skillnoteReader(charaId)
-        skillTable = charaData.analyse(skillnotes)
+        let charaSkillData = new skillNoteReader(charaId)
+        skillTable = charaSkillData.analyse(skillnotes)
 
-        console.log(skillTable)
+
+        // 全キャラ解析後にCSV出力用データへ変換する
+        const charaSkillTable = new CharaSkillTable()
+        skillTable.forEach((map)=>{
+            switch(map.get("TYPE")) {
+                case 0:
+                    map.delete("TYPE")
+                    charaSkillTable.add("attack", map)
+                break
+                case 1:
+                    map.delete("TYPE")
+                    charaSkillTable.add("bad", map)
+                break
+                case 2:
+                    map.delete("TYPE")
+                    charaSkillTable.add("guard", map)
+                break
+                case 3:
+                    map.delete("TYPE")
+                    charaSkillTable.add("heal", map)
+                break
+                case 4:
+                    map.delete("TYPE")
+                    charaSkillTable.add("assist", map)
+                break
+                case 5:
+                    map.delete("TYPE")
+                    charaSkillTable.add("provoc", map)
+                break
+                case 6:
+                    map.delete("TYPE")
+                    charaSkillTable.add("con", map)
+                break
+                default:
+                break
+            }
+        })
+        console.log(charaSkillTable)
+
+        // const map2object = Object.fromEntries(map)
 
         // const types = ["attack", "bad", "guard", "heal", "assist", "provoc"/*, "cons"*/]
         // types.forEach((type) => {
