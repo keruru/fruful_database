@@ -88,6 +88,22 @@ class SkillRecordFormat {
         ])
     }
 
+    _demeritTable(id, category, type, turn, last, target, range, num, action, power, buff) {
+        return new Map([
+            ["CID", id],
+            ["CATEGORY", category],
+            ["TYPE", type],
+            ["DMERIT_TURN", turn],
+            ["DMERIT_LAST", last],
+            ["DMERIT_TARGET", target],
+            ["DMERIT_RANGE", range],
+            ["DMERIT_NUM", num],
+            ["DMERIT_ACTION", action],
+            ["DMERIT_POWER", power],
+            ["DMERIT_BUFF", buff]
+        ])
+    }
+
     getAttackRecord(id, category, effect) {
         const type = 0
         const target = SkillRecordFormat.target.get(effect[1])
@@ -168,8 +184,24 @@ class SkillRecordFormat {
         const range = this._isUndefined(SkillRecordFormat.range.get(effect[2]))
         const num = isNaN(parseInt(effect[2])) ? null : parseInt(effect[2])
 
-        return this._assistTable(
+        return this._provocTable(
             id, category, type, target, range, num
+        )
+    }
+
+    getDemeritRecord(id, category, effect) {
+        const type = 6
+        const turn = isNaN(parseInt(effect[1])) ? null : parseInt(effect[1])
+        const last = effect[2]==="戦闘終了"
+        const target = this._isUndefined(SkillRecordFormat.target.get(effect[3]))
+        const range = this._isUndefined(SkillRecordFormat.range.get(effect[4]))
+        const num = isNaN(parseInt(effect[4])) ? null : parseInt(effect[4])
+        const action = SkillRecordFormat.action.get(effect[5])
+        const power = SkillRecordFormat.power.get(effect[6])
+        const buff = SkillRecordFormat.buff.get(effect[7])
+
+        return this._demeritTable(
+            id, category, type, turn, last, target, range, num, action, power, buff
         )
     }
 
@@ -252,7 +284,10 @@ SkillRecordFormat.action = new Map([
     ["被ダメージ", 3],
     ["クリティカル", 4],
     ["ふるボッコ発動時の与ダメージ", 5],
-    ["消費MP", 6]
+    ["FCドロップ数", 6],
+    ["消費MP", 7],
+    ["最大HP", 8],
+    ["最大MP", 9]
 ])
 SkillRecordFormat.buff = new Map([
     ["アップ", 0],
