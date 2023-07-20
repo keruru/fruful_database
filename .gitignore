@@ -3,5 +3,4 @@ cmd.bat
 .vscode/
 node_modules/
 test/
-csv/*
-resouce/*
+csv/
