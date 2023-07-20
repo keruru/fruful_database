@@ -19,11 +19,16 @@ class skillnoteReader {
     analyse(skillnotes) {
         let skillTable = []
         let skillTypes = []
+        let revNote = ""
         skillnotes.forEach((note, i_category) => {
-            if(note === undefined) return
-            skillTypes = this._analyseSkillType(note)
+            if(!note || note === undefined) return
+            revNote = skillnoteReader.noteRevise(
+                note, this.charaId, i_category
+            ) || note
+
+            skillTypes = this._analyseSkillType(revNote)
             skillTable = this._analyseSkillEffect(
-                skillTypes, note, i_category
+                skillTypes, revNote, i_category
             )
             this.charaSkillTable.push(...skillTable)
             skillTable.length = 0
@@ -57,12 +62,13 @@ class skillnoteReader {
                 break
                 case "るが、":
                     // 実装されているデメリット持ち2キャラのデメリットの文面は最後尾に来るため
-                    // デメリットの文面が見つかったら、そのキャラのスキル解析を終了する
-                    // 今後スキル説明文の構成が変わった場合、デメリットのスキルタイプを補助に変更する
+                    // スキル説明文にデメリットの文面が見つかったら、そのスキルの解析を終了させる
+                    // 今後、スキル説明文の構成が変わり、デメリットのパターンを特定できなくなったら
+                    // デメリットのスキルタイプを補助に変更する
                     skillTypes.push("demerit")
                     skillnoteReader.typeRegex.lastIndex = skillnote.length
                 break
-                default : console.log(`キャラID: ${this.charaId} のスキルのタイプが判別できません。`)
+                default : console.log(`キャラID: ${this.charaId} のスキルのタイプを判別できません。`)
                 break
             }
             skillnoteReader.typeRegex.lastIndex
@@ -80,7 +86,7 @@ class skillnoteReader {
             typeRegex.lastIndex = lastIdx
             effect = typeRegex.exec(note)
             if(effect === null) {
-                console.log(`キャラID: ${this.charaId} のスキルの効果が解析できません。`)
+                console.log(`キャラID: ${this.charaId} のスキルの効果を解析できません。`)
             }
             skillTable.push(this._formSkillRecord(i_category, type, effect))
             lastIdx = typeRegex.lastIndex
@@ -135,12 +141,23 @@ class skillnoteReader {
 }
 
 skillnoteReader.typeRegex = new RegExp(/ダメージを与え|付与|無効化|回復|アップ|ダウン|挑発|るが、/, "g")
-skillnoteReader.attackRegex = new RegExp(/.*?(敵|味方)(\d+体|全体).+?(?:(\d+)(?=連撃).+?)?(物理|魔法)(小|中|大|特大|超特大|絶大|超絶大|極大|超極大|激大|超激大)ダメージを与え/, "g")
-skillnoteReader.badRegex = new RegExp(/.*?(\d+ターン).+?(自身|味方|敵)(\d+体|全体)?.+?(毒|沈黙|暗闇|麻痺|恐慌|呪い)を付与/, "g")
-skillnoteReader.guardRegex = new RegExp(/.*?(\d+ターン).+?(自身|味方|敵)(\d+体|全体)?.+?(毒|沈黙|暗闇|麻痺|恐慌|呪い)を無効化/, "g")
-skillnoteReader.healRegex = new RegExp(/.*?(?:(\d+ターン).+?)?(?:([春夏秋冬])(?=季節).+?)?(?:([火水土風光闇全])(?=属性).+?)?(自身|味方)(\d+体|全体)?.+?(HP|MP).+?(継続)?(小|中|大|特大|超特大|絶大|超絶大|極大|超極大|激大|超激大)?回復させ/, "g")
-skillnoteReader.assistRegex = new RegExp(/.*?(\d+ターン).+?(?:([春夏秋冬])(?=季節).+?)?(?:([火水土風光闇全])(?=属性).+?)?(自身|味方|敵)(\d+体|全体|体数分)?.+?(攻撃力|防御力|与ダメージ|被ダメージ|クリティカル|ふるボッコ発動時の与ダメージ|FCドロップ数|消費MP).+?(小|中|大|特大|超特大|絶大|超絶大|極大|超極大|激大|超激大)(アップ|ダウン)させ/, "g")
-skillnoteReader.provocRegex = new RegExp(/.*?(敵|味方)(\d+体|全体).+?挑発/, "g")
-skillnoteReader.demeritRegex = new RegExp(/.*?るが、(?:(\d+ターン).+?)?(?:(戦闘終了まで).+?)?(自身|味方|敵)(\d+体|全体)?.+?(攻撃力|防御力|与ダメージ|被ダメージ|クリティカル|ふるボッコ発動時の与ダメージ|FCドロップ数|消費MP|最大HP|最大MP).+?(小|中|大|特大|超特大|絶大|超絶大|極大|超極大|激大|超激大)(アップ|ダウン)する/, "g")
+skillnoteReader.attackRegex = new RegExp(/(自身|味方|敵)?(?:(\d+体|全体|体数分)?に)?(?:(\d+)連撃の)?(物理|魔法)(小|中|大|特大|超特大|絶大|超絶大|極大|超極大|激大|超激大)ダメージを与え/, "g")
+skillnoteReader.badRegex = new RegExp(/(?:(\d+ターン)?、)?(自身|味方|敵)?(?:(\d+体|全体|体数分)?に)?(毒|沈黙|暗闇|麻痺|恐慌|呪い)を付与/, "g")
+skillnoteReader.guardRegex = new RegExp(/(?:(\d+ターン)?、)?(自身|味方|敵)?(?:(\d+体|全体|体数分)?の)?(毒|沈黙|暗闇|麻痺|恐慌|呪い)を無効化/, "g")
+skillnoteReader.healRegex = new RegExp(/(?:(\d+ターン)?、)?(?:([春夏秋冬])季節の)?(?:([火水土風光闇全])属性の)?(自身|味方|敵)?(?:(\d+体|全体|体数分)?の)?(HP|MP)を(継続)?(小|中|大|特大|超特大|絶大|超絶大|極大|超極大|激大|超激大)?回復/, "g")
+skillnoteReader.assistRegex = new RegExp(/(?:(\d+ターン)?、)?(?:([春夏秋冬])季節の)?(?:([火水土風光闇全])属性の)?(自身|味方|敵)?(?:(\d+体|全体|体数分)?の)?(攻撃力|防御力|(?<!ふるボッコ発動時の)与ダメージ|被ダメージ|クリティカル|ふるボッコ発動時の与ダメージ|FCドロップ数|消費MP)を(小|中|大|特大|超特大|絶大|超絶大|極大|超極大|激大|超激大)(アップ|ダウン)/, "g")
+skillnoteReader.provocRegex = new RegExp(/(自身|味方|敵)?(?:(\d+体|全体|体数分)?を)?挑発/, "g")
+skillnoteReader.demeritRegex = new RegExp(/るが、(?:(\d+ターン)?、)?(?:(戦闘終了)まで、)?(自身|味方|敵)?(?:(\d+体|全体|体数分)?の)?(攻撃力|防御力|(?<!ふるボッコ発動時の)与ダメージ|被ダメージ|クリティカル|ふるボッコ発動時の与ダメージ|FCドロップ数|消費MP|最大HP|最大MP)が(小|中|大|特大|超特大|絶大|超絶大|極大|超極大|激大|超激大)(アップ|ダウン)/, "g")
+
+skillnoteReader.noteRevise = function(note, charaId, i_category) {
+    if(charaId==='439' && i_category===0) { 
+        // ねぎ(大正ロマン) 通常スキル
+        return note.replace('HP継続', 'HPを継続')
+    }
+    // if(charaId==='210' && (i_category===0 || i_category===2)) {
+    //     // ルナ(アートワール) 通常スキル 通常覚醒スキル
+    //     return note.replace('回復する', '回復させる')
+    // }
+}
 
 export default skillnoteReader

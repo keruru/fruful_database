@@ -6,10 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "node index.js",
-    "devmon": "nodemon index.js",
-    "devsub": "node ./plugins/skill-note-reader.js",
-    "devtab": "node ./plugins/skill-record-format.js",
-    "devmemo": "node ./plugins/CharaSkillTable.js"
+    "devmon": "nodemon index.js"
   },
   "keywords": [],
   "author": "keruru",

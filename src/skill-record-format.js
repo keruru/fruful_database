@@ -12,7 +12,7 @@ class SkillRecordFormat {
             ["ATK_RANGE", range],
             ["ATK_NUM", num],
             ["ATK_HIT", hit],
-            ["ATK_AMTK", atkmatk],
+            ["ATK_ATKMTK", atkmatk],
             ["ATK_POWER", power]
         ])
     }
@@ -106,10 +106,10 @@ class SkillRecordFormat {
 
     getAttackRecord(id, category, effect) {
         const type = 0
-        const target = SkillRecordFormat.target.get(effect[1])
-        const range = this._isUndefined(SkillRecordFormat.range.get(effect[2]))
-        const num = isNaN(parseInt(effect[2])) ? null : parseInt(effect[2])
-        const hit = isNaN(parseInt(effect[3])) ? null : parseInt(effect[3])
+        const target = this._isUndefinedTo(SkillRecordFormat.target.get(effect[1]))
+        const range = this._isUndefinedTo(SkillRecordFormat.range.get(effect[2]))
+        const num = this._isNaNTo(parseInt(effect[2]))
+        const hit = this._isNaNTo(parseInt(effect[3]))
         const atkmatk = SkillRecordFormat.atkmatk.get(effect[4])
         const power = SkillRecordFormat.power.get(effect[5])
 
@@ -120,10 +120,10 @@ class SkillRecordFormat {
 
     getBadRecord(id, category, effect) {
         const type = 1
-        const turn = isNaN(parseInt(effect[1])) ? null : parseInt(effect[1])
-        const target = SkillRecordFormat.target.get(effect[2])
-        const range = this._isUndefined(SkillRecordFormat.range.get(effect[3]))
-        const num = isNaN(parseInt(effect[3])) ? null : parseInt(effect[3])
+        const turn = this._isNaNTo(parseInt(effect[1]))
+        const target = this._isUndefinedTo(SkillRecordFormat.target.get(effect[2]))
+        const range = this._isUndefinedTo(SkillRecordFormat.range.get(effect[3]))
+        const num = this._isNaNTo(parseInt(effect[3]))
         const bad = SkillRecordFormat.bad.get(effect[4])
 
         return this._badTable(
@@ -133,10 +133,10 @@ class SkillRecordFormat {
 
     getGuardRecord(id, category, effect) {
         const type = 2
-        const turn = isNaN(parseInt(effect[1])) ? null : parseInt(effect[1])
-        const target = SkillRecordFormat.target.get(effect[2])
-        const range = this._isUndefined(SkillRecordFormat.range.get(effect[3]))
-        const num = isNaN(parseInt(effect[3])) ? null : parseInt(effect[3])
+        const turn = this._isNaNTo(parseInt(effect[1]))
+        const target = this._isUndefinedTo(SkillRecordFormat.target.get(effect[2]))
+        const range = this._isUndefinedTo(SkillRecordFormat.range.get(effect[3]))
+        const num = this._isNaNTo(parseInt(effect[3]))
         const bad = SkillRecordFormat.bad.get(effect[4])
 
         return this._guardTable(
@@ -146,12 +146,12 @@ class SkillRecordFormat {
 
     getHealRecord(id, category, effect) {
         const type = 3
-        const turn = isNaN(parseInt(effect[1])) ? null : parseInt(effect[1])
-        const season = this._isUndefined(SkillRecordFormat.season.get(effect[2]))
-        const element = this._isUndefined(SkillRecordFormat.element.get(effect[3]))
-        const target = SkillRecordFormat.target.get(effect[4])
-        const range = this._isUndefined(SkillRecordFormat.range.get(effect[5]))
-        const num = isNaN(parseInt(effect[5])) ? null : parseInt(effect[5])
+        const turn = this._isNaNTo(parseInt(effect[1]))
+        const season = this._isUndefinedTo(SkillRecordFormat.season.get(effect[2]))
+        const element = this._isUndefinedTo(SkillRecordFormat.element.get(effect[3]))
+        const target = this._isUndefinedTo(SkillRecordFormat.target.get(effect[4]))
+        const range = this._isUndefinedTo(SkillRecordFormat.range.get(effect[5]))
+        const num = this._isNaNTo(parseInt(effect[5]))
         const hpmp = SkillRecordFormat.hpmp.get(effect[6])
         const last = effect[7]==="継続"
         const power = SkillRecordFormat.power.get(effect[8])
@@ -163,12 +163,12 @@ class SkillRecordFormat {
 
     getAssistRecord(id, category, effect) {
         const type = 4
-        const turn = isNaN(parseInt(effect[1])) ? null : parseInt(effect[1])
-        const season = this._isUndefined(SkillRecordFormat.season.get(effect[2]))
-        const element = this._isUndefined(SkillRecordFormat.element.get(effect[3]))
-        const target = SkillRecordFormat.target.get(effect[4])
-        const range = this._isUndefined(SkillRecordFormat.range.get(effect[5]))
-        const num = isNaN(parseInt(effect[5])) ? null : parseInt(effect[5])
+        const turn = this._isNaNTo(parseInt(effect[1]))
+        const season = this._isUndefinedTo(SkillRecordFormat.season.get(effect[2]))
+        const element = this._isUndefinedTo(SkillRecordFormat.element.get(effect[3]))
+        const target = this._isUndefinedTo(SkillRecordFormat.target.get(effect[4]))
+        const range = this._isUndefinedTo(SkillRecordFormat.range.get(effect[5]))
+        const num = this._isNaNTo(parseInt(effect[5]))
         const action = SkillRecordFormat.action.get(effect[6])
         const power = SkillRecordFormat.power.get(effect[7])
         const buff = SkillRecordFormat.buff.get(effect[8])
@@ -180,9 +180,9 @@ class SkillRecordFormat {
 
     getProvocRecord(id, category, effect) {
         const type = 5
-        const target = SkillRecordFormat.target.get(effect[1])
-        const range = this._isUndefined(SkillRecordFormat.range.get(effect[2]))
-        const num = isNaN(parseInt(effect[2])) ? null : parseInt(effect[2])
+        const target = this._isUndefinedTo(SkillRecordFormat.target.get(effect[1]))
+        const range = this._isUndefinedTo(SkillRecordFormat.range.get(effect[2]))
+        const num = this._isNaNTo(parseInt(effect[2]))
 
         return this._provocTable(
             id, category, type, target, range, num
@@ -191,11 +191,11 @@ class SkillRecordFormat {
 
     getDemeritRecord(id, category, effect) {
         const type = 6
-        const turn = isNaN(parseInt(effect[1])) ? null : parseInt(effect[1])
+        const turn = this._isNaNTo(parseInt(effect[1]))
         const last = effect[2]==="戦闘終了"
-        const target = this._isUndefined(SkillRecordFormat.target.get(effect[3]))
-        const range = this._isUndefined(SkillRecordFormat.range.get(effect[4]))
-        const num = isNaN(parseInt(effect[4])) ? null : parseInt(effect[4])
+        const target = this._isUndefinedTo(SkillRecordFormat.target.get(effect[3]))
+        const range = this._isUndefinedTo(SkillRecordFormat.range.get(effect[4]))
+        const num = this._isNaNTo(parseInt(effect[4]))
         const action = SkillRecordFormat.action.get(effect[5])
         const power = SkillRecordFormat.power.get(effect[6])
         const buff = SkillRecordFormat.buff.get(effect[7])
@@ -205,7 +205,8 @@ class SkillRecordFormat {
         )
     }
 
-    _isUndefined = (value) => value === undefined ? null : value 
+    _isUndefinedTo = (value) => value === undefined ? "" : value
+    _isNaNTo = (value) => isNaN(value) ? "" : parseInt(value)
 }
 
 SkillRecordFormat.category = new Map([
