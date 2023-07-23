@@ -104,18 +104,23 @@ axios(URL).then(response => {
         // }
 
         // スキル説明文
-        skillnoteRecords = {
-            'CID':charaId,
-            'NSKLNAME':nSkill_name, 'NSKLNOTE':nSkill_note,
-            'ESKLNAME':eSkill_name, 'ESKLNOTE':eSkill_note,
-            'ANSKLNAME':a_nSkill_name, 'ANSKLNOTE':a_nSkill_note,
-            'AESKLNAME':a_eSkill_name, 'AESKLNOTE':a_eSkill_note
-        }
-        skillnoteTable.push(skillnoteRecords)
+        // skillnoteRecords = {
+        //     'CID':charaId,
+        //     'NSKLNAME':nSkill_name, 'NSKLNOTE':nSkill_note,
+        //     'ESKLNAME':eSkill_name, 'ESKLNOTE':eSkill_note,
+        //     'ANSKLNAME':a_nSkill_name, 'ANSKLNOTE':a_nSkill_note,
+        //     'AESKLNAME':a_eSkill_name, 'AESKLNOTE':a_eSkill_note
+        // }
+        // skillnoteTable.push(skillnoteRecords)
 
         // キャラスキル解析
         let reader = new skillNoteReader(charaId)
-        skillnotes = [nSkill_note, eSkill_note, a_nSkill_note, a_eSkill_note]
+        skillnotes = [
+            {'name': nSkill_name, 'note': nSkill_note},
+            {'name': eSkill_name, 'note': eSkill_note},
+            {'name': a_nSkill_name, 'note': a_nSkill_note},
+            {'name': a_eSkill_name, 'note': a_eSkill_note}
+        ]
         skillRecords = reader.analyse(skillnotes)
         skillTable.push(...skillRecords)
 
