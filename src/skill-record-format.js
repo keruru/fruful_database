@@ -5,6 +5,7 @@ class SkillRecordFormat {
 
     _attackTable(id, category, type, target, range, num, hit, atkmatk, power) {
         return new Map([
+            // ['SID', SkillRecordFormat.attackId],
             ["CID", id],
             ["CATEGORY", category],
             ["TYPE", type],
@@ -294,5 +295,13 @@ SkillRecordFormat.buff = new Map([
     ["アップ", 0],
     ["ダウン", 1]
 ])
+
+// SkillRecordFormat.attackId = 0
+// SkillRecordFormat.badId = 0
+// SkillRecordFormat.guardId = 0
+// SkillRecordFormat.healId = 0
+// SkillRecordFormat.assistId = 0
+// SkillRecordFormat.provocId = 0
+// SkillRecordFormat.demeritId = 0
 
 export default new SkillRecordFormat()

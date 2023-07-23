@@ -32,6 +32,7 @@ class skillnoteReader {
             )
             this.charaSkillTable.push(...skillTable)
             skillTable.length = 0
+            // skillnoteReader.sid++
         })
         this._reset()
         return this.charaSkillTable
@@ -99,8 +100,10 @@ class skillnoteReader {
         switch(type) {
             case "attack":
                 skillRecord = skillRecordFormat.getAttackRecord(
+                    // skillnoteReader.sid, 
                     this.charaId, i_category, effect
                 )
+                // skillRecordFormat.attackId++
             break
             case "bad":
                 skillRecord = skillRecordFormat.getBadRecord(
@@ -140,6 +143,7 @@ class skillnoteReader {
 
 }
 
+// skillnoteReader.sid = 0
 skillnoteReader.typeRegex = new RegExp(/ダメージを与え|付与|無効化|回復|アップ|ダウン|挑発|るが、/, "g")
 skillnoteReader.attackRegex = new RegExp(/(自身|味方|敵)?(?:(\d+体|全体|体数分)?に)?(?:(\d+)連撃の)?(物理|魔法)(小|中|大|特大|超特大|絶大|超絶大|極大|超極大|激大|超激大)ダメージを与え/, "g")
 skillnoteReader.badRegex = new RegExp(/(?:(\d+ターン)?、)?(自身|味方|敵)?(?:(\d+体|全体|体数分)?に)?(毒|沈黙|暗闇|麻痺|恐慌|呪い)を付与/, "g")

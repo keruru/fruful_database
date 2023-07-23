@@ -90,25 +90,32 @@ axios(URL).then(response => {
 
         // キャラマスタ
         charaMasterRecords = {
-            "CID":charaId, "RANK":rank, "ELEM":element, "NAME":name,
-            "MAXHP":maxHp, "AMAXHP":a_maxHp, "MAXMP":maxMp, "AMAXMP":a_maxMp,
-            "MAXATK":maxAtk, "AMAXATK":a_maxAtk, "MAXDEF":maxDef, "AMAXDEF":a_maxDef
+            'CID':charaId, 'RANK':rank, 'ELEM':element, 'NAME':name,
+            'MAXHP':maxHp, 'AMAXHP':a_maxHp, 'MAXMP':maxMp, 'AMAXMP':a_maxMp,
+            'MAXATK':maxAtk, 'AMAXATK':a_maxAtk, 'MAXDEF':maxDef, 'AMAXDEF':a_maxDef
         }
         charaMasterTable.push(charaMasterRecords)
 
+        // スキルマスタ
+        // skillMasterRecords = {
+        //     'SID':skillId,
+        //     'CID':charaId, 'CATEGORY': category,
+        //     'SKLNAME':"", 'SKLNOTE':""
+        // }
+
         // スキル説明文
         skillnoteRecords = {
-            "CID":charaId,
-            "NSKLNAME":nSkill_name, "NSKLNOTE":nSkill_note,
-            "ESKLNAME":eSkill_name, "ESKLNOTE":eSkill_note,
-            "ANSKLNAME":a_nSkill_name, "ANSKLNOTE":a_nSkill_note,
-            "AESKLNAME":a_eSkill_name, "AESKLNOTE":a_eSkill_note,
+            'CID':charaId,
+            'NSKLNAME':nSkill_name, 'NSKLNOTE':nSkill_note,
+            'ESKLNAME':eSkill_name, 'ESKLNOTE':eSkill_note,
+            'ANSKLNAME':a_nSkill_name, 'ANSKLNOTE':a_nSkill_note,
+            'AESKLNAME':a_eSkill_name, 'AESKLNOTE':a_eSkill_note
         }
         skillnoteTable.push(skillnoteRecords)
 
         // キャラスキル解析
-        skillnotes = [nSkill_note, eSkill_note, a_nSkill_note, a_eSkill_note]
         let reader = new skillNoteReader(charaId)
+        skillnotes = [nSkill_note, eSkill_note, a_nSkill_note, a_eSkill_note]
         skillRecords = reader.analyse(skillnotes)
         skillTable.push(...skillRecords)
 
@@ -245,63 +252,22 @@ axios(URL).then(response => {
         console.log(`スキル(デメリットタイプ)のCSVを出力=>${csvfilepath}_demerit.csv`)
     })
 
-    // const charaSkillTable = new CharaSkillTable()
-    // skillTable.forEach((map)=>{
-    //     switch(map.get("TYPE")) {
-    //         case 0:
-    //             map.delete("TYPE")
-    //             charaSkillTable.add("attack", map)
-    //         break
-    //         case 1:
-    //             map.delete("TYPE")
-    //             charaSkillTable.add("bad", map)
-    //         break
-    //         case 2:
-    //             map.delete("TYPE")
-    //             charaSkillTable.add("guard", map)
-    //         break
-    //         case 3:
-    //             map.delete("TYPE")
-    //             charaSkillTable.add("heal", map)
-    //         break
-    //         case 4:
-    //             map.delete("TYPE")
-    //             charaSkillTable.add("assist", map)
-    //         break
-    //         case 5:
-    //             map.delete("TYPE")
-    //             charaSkillTable.add("provoc", map)
-    //         break
-    //         case 6:
-    //             map.delete("TYPE")
-    //             charaSkillTable.add("demerit", map)
-    //         break
-    //         default:
-    //         break
-    //     }
-    // })
-
-    // console.log(skillnoteTable)
-    // console.log(charaMasterTable)
-    // console.log(charaSkillTable)
-    // console.log(skillTable)
-
 }).catch(e => console.log(e))
 
 function _isUndefinedTo(value) {
     return value === undefined ? "" : value
 }
 
-Object.defineProperty(String.prototype, "_getElement", {
+Object.defineProperty(String.prototype, '_getElement', {
     value: function _getElement() {
         const element = new Map([
-            ["all", "0"],
-            ["fire", "1"],
-            ["water", "2"],
-            ["earth", "3"],
-            ["wind", "4"],
-            ["light", "5"],
-            ["dark", "6"]
+            ['all', "0"],
+            ['fire', "1"],
+            ['water', "2"],
+            ['earth', "3"],
+            ['wind', "4"],
+            ['light', "5"],
+            ['dark', "6"]
         ])
         return element.get(this)
     }
