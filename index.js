@@ -7,7 +7,6 @@ import { fileURLToPath } from 'url'
 import { createObjectCsvWriter } from 'csv-writer'
 
 import skillNoteReader from './src/skill-note-reader.js'
-// import CharaSkillTable from './plugins/CharaSkillTable.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -23,17 +22,17 @@ axios(URL).then(response => {
     const $ = load(html)
 
     let charaMasterTable = []
-    let charaMasterRecords = {}
-    let skillnoteTable = []
-    let skillnoteRecords = {}
+    let charaMasterRecord = {}
+    let skillMasterTable = []
+    let skillMasterRecord = {}
     let skillnotes = []
-    let skillTable = []
-    let skillRecords = []
+    let skillTypeTable = []
+    let skillTypeRecords = []
 
     const timeA = performance.now()
 
-    const tableCharaDetail = $('.table_chara_detail', html)
-    tableCharaDetail.each((i, charaDetail) => {
+    const charaDetailTable = $('.table_chara_detail', html)
+    charaDetailTable.each((i, charaDetail) => {
 
         // DOMからキャラデータを抽出
         const thead = 
@@ -88,32 +87,14 @@ axios(URL).then(response => {
         const a_eSkill_name = a_eSkill.find('.skill_name').text().trim()
         const a_eSkill_note = a_eSkill.find('.skill_note').text().trim()
 
-        // キャラマスタ
-        charaMasterRecords = {
+        // キャラマスタを作成
+        charaMasterRecord = {
             'CID':charaId, 'RANK':rank, 'ELEM':element, 'NAME':name,
             'MAXHP':maxHp, 'AMAXHP':a_maxHp, 'MAXMP':maxMp, 'AMAXMP':a_maxMp,
             'MAXATK':maxAtk, 'AMAXATK':a_maxAtk, 'MAXDEF':maxDef, 'AMAXDEF':a_maxDef
         }
-        charaMasterTable.push(charaMasterRecords)
+        charaMasterTable.push(charaMasterRecord)
 
-        // スキルマスタ
-        // skillMasterRecords = {
-        //     'SID':skillId,
-        //     'CID':charaId, 'CATEGORY': category,
-        //     'SKLNAME':"", 'SKLNOTE':""
-        // }
-
-        // スキル説明文
-        // skillnoteRecords = {
-        //     'CID':charaId,
-        //     'NSKLNAME':nSkill_name, 'NSKLNOTE':nSkill_note,
-        //     'ESKLNAME':eSkill_name, 'ESKLNOTE':eSkill_note,
-        //     'ANSKLNAME':a_nSkill_name, 'ANSKLNOTE':a_nSkill_note,
-        //     'AESKLNAME':a_eSkill_name, 'AESKLNOTE':a_eSkill_note
-        // }
-        // skillnoteTable.push(skillnoteRecords)
-
-        // キャラスキル解析
         let reader = new skillNoteReader(charaId)
         skillnotes = [
             {'name': nSkill_name, 'note': nSkill_note},
@@ -121,11 +102,24 @@ axios(URL).then(response => {
             {'name': a_nSkill_name, 'note': a_nSkill_note},
             {'name': a_eSkill_name, 'note': a_eSkill_note}
         ]
-        skillRecords = reader.analyse(skillnotes)
-        skillTable.push(...skillRecords)
+        skillnotes.forEach((skillnote, i_category) => {
+            if(!skillnote.name) return
 
+            // スキルマスタを作成
+            skillMasterRecord = {
+                'SID':skillNoteReader.sid,
+                'CID':charaId, 'CATEGORY': i_category,
+                'SKLNAME':skillnote.name, 'SKLNOTE':skillnote.note
+            }
+            skillMasterTable.push(skillMasterRecord)
+
+            // 各タイプのスキルテーブルを作成
+            skillTypeRecords = reader.analyse(skillnote.note, i_category)
+            skillTypeTable.push(...skillTypeRecords)
+        })
+        
         if(i%50 === 0) {
-            console.log(`キャラスキルを解析中... 現在${++i} / 全${tableCharaDetail.length}`)
+            console.log(`キャラスキルを解析中... 現在${++i} / 全${charaDetailTable.length}`)
         }
     })
 
@@ -141,7 +135,7 @@ axios(URL).then(response => {
     let assist = []
     let provoc = []
     let demerit = []
-    skillTable.forEach((map)=>{
+    skillTypeTable.forEach((map)=>{
         switch(map.get("TYPE")) {
             case 0:
                 map.delete("TYPE")
@@ -185,77 +179,95 @@ axios(URL).then(response => {
     }).replaceAll('/', '-')
     const csvfilepath = __dirname + '/csv/' + now
 
-    const masterCsv = createObjectCsvWriter({
-        path : csvfilepath + '_master.csv',
-        header : Object.keys(charaMasterTable[0]).map(v => ({id : v, title : v}))
-    })
-    masterCsv.writeRecords(charaMasterTable).then(() => {
-        console.log(`キャラマスタのCSVを出力=>${csvfilepath}_master.csv`)
-    })
+    if(charaMasterTable.length !== 0) {
+        const charaMasterCsv = createObjectCsvWriter({
+            path : csvfilepath + '_chara.csv',
+            header : Object.keys(charaMasterTable[0]).map(v => ({id : v, title : v}))
+        })
+        charaMasterCsv.writeRecords(charaMasterTable).then(() => {
+            console.log(`キャラマスタのCSVを出力=>${csvfilepath}_chara.csv`)
+        })
+    }
 
-    const skillnoteCsv = createObjectCsvWriter({
-        path : csvfilepath + '_skillnote.csv',
-        header : Object.keys(skillnoteTable[0]).map(v => ({id : v, title : v}))
-    })
-    skillnoteCsv.writeRecords(skillnoteTable).then(() => {
-        console.log(`キャラスキル説明文のCSVを出力=>${csvfilepath}_skillnote.csv`)
-    })
+    if(skillMasterTable.length !== 0) {
+        const skillMasterCsv = createObjectCsvWriter({
+            path : csvfilepath + '_skill.csv',
+            header : Object.keys(skillMasterTable[0]).map(v => ({id : v, title : v}))
+        })
+        skillMasterCsv.writeRecords(skillMasterTable).then(() => {
+            console.log(`スキルマスタのCSVを出力=>${csvfilepath}_skill.csv`)
+        })    
+    }
 
-    const attackCsv = createObjectCsvWriter({
-        path : csvfilepath + '_attack.csv',
-        header : Object.keys(attack[0]).map(v => ({id : v, title : v}))
-    })
-    attackCsv.writeRecords(attack).then(() => {
-        console.log(`スキル(攻撃タイプ)のCSVを出力=>${csvfilepath}_attack.csv`)
-    })
+    if(attack.length !== 0) {
+        const attackCsv = createObjectCsvWriter({
+            path : csvfilepath + '_attack.csv',
+            header : Object.keys(attack[0]).map(v => ({id : v, title : v}))
+        })
+        attackCsv.writeRecords(attack).then(() => {
+            console.log(`スキル(攻撃タイプ)のCSVを出力=>${csvfilepath}_attack.csv`)
+        })
+    }
 
-    const badCsv = createObjectCsvWriter({
-        path : csvfilepath + '_bad.csv',
-        header : Object.keys(bad[0]).map(v => ({id : v, title : v}))
-    })
-    badCsv.writeRecords(bad).then(() => {
-        console.log(`スキル(状態異常タイプ)のCSVを出力=>${csvfilepath}_bad.csv`)
-    })
+    if(bad.length !== 0) {
+        const badCsv = createObjectCsvWriter({
+            path : csvfilepath + '_bad.csv',
+            header : Object.keys(bad[0]).map(v => ({id : v, title : v}))
+        })
+        badCsv.writeRecords(bad).then(() => {
+            console.log(`スキル(状態異常タイプ)のCSVを出力=>${csvfilepath}_bad.csv`)
+        })
+    }
 
-    const guardCsv = createObjectCsvWriter({
-        path : csvfilepath + '_guard.csv',
-        header : Object.keys(guard[0]).map(v => ({id : v, title : v}))
-    })
-    guardCsv.writeRecords(guard).then(() => {
-        console.log(`スキル(異常無効タイプ)のCSVを出力=>${csvfilepath}_guard.csv`)
-    })
+    if(guard.length !== 0) {
+        const guardCsv = createObjectCsvWriter({
+            path : csvfilepath + '_guard.csv',
+            header : Object.keys(guard[0]).map(v => ({id : v, title : v}))
+        })
+        guardCsv.writeRecords(guard).then(() => {
+            console.log(`スキル(異常無効タイプ)のCSVを出力=>${csvfilepath}_guard.csv`)
+        })    
+    }
 
-    const healCsv = createObjectCsvWriter({
-        path : csvfilepath + '_heal.csv',
-        header : Object.keys(heal[0]).map(v => ({id : v, title : v}))
-    })
-    healCsv.writeRecords(heal).then(() => {
-        console.log(`スキル(回復タイプ)のCSVを出力=>${csvfilepath}_heal.csv`)
-    })
+    if(heal.length !== 0) {
+        const healCsv = createObjectCsvWriter({
+            path : csvfilepath + '_heal.csv',
+            header : Object.keys(heal[0]).map(v => ({id : v, title : v}))
+        })
+        healCsv.writeRecords(heal).then(() => {
+            console.log(`スキル(回復タイプ)のCSVを出力=>${csvfilepath}_heal.csv`)
+        })
+    }
 
-    const assistCsv = createObjectCsvWriter({
-        path : csvfilepath + '_assist.csv',
-        header : Object.keys(assist[0]).map(v => ({id : v, title : v}))
-    })
-    assistCsv.writeRecords(assist).then(() => {
-        console.log(`スキル(補助タイプ)のCSVを出力=>${csvfilepath}_assist.csv`)
-    })
+    if(assist.length !== 0) {
+        const assistCsv = createObjectCsvWriter({
+            path : csvfilepath + '_assist.csv',
+            header : Object.keys(assist[0]).map(v => ({id : v, title : v}))
+        })
+        assistCsv.writeRecords(assist).then(() => {
+            console.log(`スキル(補助タイプ)のCSVを出力=>${csvfilepath}_assist.csv`)
+        })
+    }
 
-    const provocCsv = createObjectCsvWriter({
-        path : csvfilepath + '_provoc.csv',
-        header : Object.keys(provoc[0]).map(v => ({id : v, title : v}))
-    })
-    provocCsv.writeRecords(provoc).then(() => {
-        console.log(`スキル(挑発タイプ)のCSVを出力=>${csvfilepath}_provoc.csv`)
-    })
+    if(provoc.length !== 0) {
+        const provocCsv = createObjectCsvWriter({
+            path : csvfilepath + '_provoc.csv',
+            header : Object.keys(provoc[0]).map(v => ({id : v, title : v}))
+        })
+        provocCsv.writeRecords(provoc).then(() => {
+            console.log(`スキル(挑発タイプ)のCSVを出力=>${csvfilepath}_provoc.csv`)
+        })    
+    }
 
-    const demeritCsv = createObjectCsvWriter({
-        path : csvfilepath + '_demerit.csv',
-        header : Object.keys(demerit[0]).map(v => ({id : v, title : v}))
-    })
-    demeritCsv.writeRecords(demerit).then(() => {
-        console.log(`スキル(デメリットタイプ)のCSVを出力=>${csvfilepath}_demerit.csv`)
-    })
+    if(demerit.length !== 0) {
+        const demeritCsv = createObjectCsvWriter({
+            path : csvfilepath + '_demerit.csv',
+            header : Object.keys(demerit[0]).map(v => ({id : v, title : v}))
+        })
+        demeritCsv.writeRecords(demerit).then(() => {
+            console.log(`スキル(デメリットタイプ)のCSVを出力=>${csvfilepath}_demerit.csv`)
+        })
+    }
 
 }).catch(e => console.log(e))
 

@@ -3,109 +3,108 @@ class SkillRecordFormat {
     constructor() {
     }
 
-    _attackTable(id, category, type, target, range, num, hit, atkmatk, power) {
+    _attackTable(sid, type, target, range, num, hit, atkmatk, power) {
         return new Map([
-            // ['SID', SkillRecordFormat.attackId],
-            ["CID", id],
-            ["CATEGORY", category],
-            ["TYPE", type],
-            ["ATK_TARGET", target],
-            ["ATK_RANGE", range],
-            ["ATK_NUM", num],
-            ["ATK_HIT", hit],
-            ["ATK_ATKMTK", atkmatk],
-            ["ATK_POWER", power]
+            ['ATK_ID', SkillRecordFormat.attackId],
+            ['SID', sid],
+            ['TYPE', type],
+            ['ATK_TARGET', target],
+            ['ATK_RANGE', range],
+            ['ATK_NUM', num],
+            ['ATK_HIT', hit],
+            ['ATK_ATKMTK', atkmatk],
+            ['ATK_POWER', power]
         ])
     }
 
-    _badTable(id, category, type, turn, target, range, num, bad) {
+    _badTable(sid, type, turn, target, range, num, bad) {
         return new Map([
-            ["CID", id],
-            ["CATEGORY", category],
-            ["TYPE", type],
-            ["BAD_TURN", turn],
-            ["BAD_TARGET", target],
-            ["BAD_RANGE", range],
-            ["BAD_NUM", num],
-            ["BAD_BAD", bad]
+            ['BAD_ID', SkillRecordFormat.badId],
+            ['SID', sid],
+            ['TYPE', type],
+            ['BAD_TURN', turn],
+            ['BAD_TARGET', target],
+            ['BAD_RANGE', range],
+            ['BAD_NUM', num],
+            ['BAD_BAD', bad]
         ])
     }
 
-    _guardTable(id, category, type, turn, target, range, num, bad) {
+    _guardTable(sid, type, turn, target, range, num, bad) {
         return new Map([
-            ["CID", id],
-            ["CATEGORY", category],
-            ["TYPE", type],
-            ["GUR_TURN", turn],
-            ["GUR_TARGET", target],
-            ["GUR_RANGE", range],
-            ["GUR_NUM", num],
-            ["GUR_BAD", bad]
+            ['GUR_ID', SkillRecordFormat.guardId],
+            ['SID', sid],
+            ['TYPE', type],
+            ['GUR_TURN', turn],
+            ['GUR_TARGET', target],
+            ['GUR_RANGE', range],
+            ['GUR_NUM', num],
+            ['GUR_BAD', bad]
         ])
     }
 
-    _healTable(id, category, type, turn, season, element, target, range, num, hpmp, last, power) {
+    _healTable(sid, type, turn, season, element, target, range, num, hpmp, last, power) {
         return new Map([
-            ["CID", id],
-            ["CATEGORY", category],
-            ["TYPE", type],
-            ["HEAL_TURN", turn],
-            ["HEAL_SEASON", season],
-            ["HEAL_ELEM", element],
-            ["HEAL_TARGET", target],
-            ["HEAL_RANGE", range],
-            ["HEAL_NUM", num],
-            ["HEAL_HPMP", hpmp],
-            ["HEAL_LAST", last],
-            ["HEAL_POWER", power]
+            ['HEAL_ID', SkillRecordFormat.healId],
+            ['SID', sid],
+            ['TYPE', type],
+            ['HEAL_TURN', turn],
+            ['HEAL_SEASON', season],
+            ['HEAL_ELEM', element],
+            ['HEAL_TARGET', target],
+            ['HEAL_RANGE', range],
+            ['HEAL_NUM', num],
+            ['HEAL_HPMP', hpmp],
+            ['HEAL_LAST', last],
+            ['HEAL_POWER', power]
         ])
     }
 
-    _assistTable(id, category, type, turn, season, element, target, range, num, action, power, buff) {
+    _assistTable(sid, type, turn, season, element, target, range, num, action, power, buff) {
         return new Map([
-            ["CID", id],
-            ["CATEGORY", category],
-            ["TYPE", type],
-            ["ASST_TURN", turn],
-            ["ASST_SEASON", season],
-            ["ASST_ELEM", element],
-            ["ASST_TARGET", target],
-            ["ASST_RANGE", range],
-            ["ASST_NUM", num],
-            ["ASST_ACTION", action],
-            ["ASST_POWER", power],
-            ["ASST_BUFF", buff]
+            ['ASST_ID', SkillRecordFormat.assistId],
+            ['SID', sid],
+            ['TYPE', type],
+            ['ASST_TURN', turn],
+            ['ASST_SEASON', season],
+            ['ASST_ELEM', element],
+            ['ASST_TARGET', target],
+            ['ASST_RANGE', range],
+            ['ASST_NUM', num],
+            ['ASST_ACTION', action],
+            ['ASST_POWER', power],
+            ['ASST_BUFF', buff]
         ])
     }
 
-    _provocTable(id, category, type, target, range, num) {
+    _provocTable(sid, type, target, range, num) {
         return new Map([
-            ["CID", id],
-            ["CATEGORY", category],
-            ["TYPE", type],
-            ["PROVC_TARGET", target],
-            ["PROVC_RANGE", range],
-            ["PROVC_NUM", num]
+            ['PROVC_ID', SkillRecordFormat.provocId],
+            ['SID', sid],
+            ['TYPE', type],
+            ['PROVC_TARGET', target],
+            ['PROVC_RANGE', range],
+            ['PROVC_NUM', num]
         ])
     }
 
-    _demeritTable(id, category, type, turn, last, target, range, num, action, power, buff) {
+    _demeritTable(sid, type, turn, last, target, range, num, action, power, buff) {
         return new Map([
-            ["CID", id],
-            ["CATEGORY", category],
-            ["TYPE", type],
-            ["DMERIT_TURN", turn],
-            ["DMERIT_LAST", last],
-            ["DMERIT_TARGET", target],
-            ["DMERIT_RANGE", range],
-            ["DMERIT_NUM", num],
-            ["DMERIT_ACTION", action],
-            ["DMERIT_POWER", power],
-            ["DMERIT_BUFF", buff]
+            ['DMERIT_ID', SkillRecordFormat.demeritId],
+            ['SID', sid],
+            ['TYPE', type],
+            ['DMERIT_TURN', turn],
+            ['DMERIT_LAST', last],
+            ['DMERIT_TARGET', target],
+            ['DMERIT_RANGE', range],
+            ['DMERIT_NUM', num],
+            ['DMERIT_ACTION', action],
+            ['DMERIT_POWER', power],
+            ['DMERIT_BUFF', buff]
         ])
     }
 
-    getAttackRecord(id, category, effect) {
+    getAttackRecord(sid, effect) {
         const type = 0
         const target = this._isUndefinedTo(SkillRecordFormat.target.get(effect[1]))
         const range = this._isUndefinedTo(SkillRecordFormat.range.get(effect[2]))
@@ -114,12 +113,14 @@ class SkillRecordFormat {
         const atkmatk = SkillRecordFormat.atkmatk.get(effect[4])
         const power = SkillRecordFormat.power.get(effect[5])
 
-        return this._attackTable(
-            id, category, type, target, range, num, hit, atkmatk, power
+        const attackRecord = this._attackTable(
+             sid, type, target, range, num, hit, atkmatk, power
         )
+        SkillRecordFormat.attackId++
+        return attackRecord
     }
 
-    getBadRecord(id, category, effect) {
+    getBadRecord(sid, effect) {
         const type = 1
         const turn = this._isNaNTo(parseInt(effect[1]))
         const target = this._isUndefinedTo(SkillRecordFormat.target.get(effect[2]))
@@ -127,12 +128,14 @@ class SkillRecordFormat {
         const num = this._isNaNTo(parseInt(effect[3]))
         const bad = SkillRecordFormat.bad.get(effect[4])
 
-        return this._badTable(
-            id, category, type, turn, target, range, num, bad
+        const badRecord = this._badTable(
+            sid, type, turn, target, range, num, bad
         )
+        SkillRecordFormat.badId++
+        return badRecord
     }
 
-    getGuardRecord(id, category, effect) {
+    getGuardRecord(sid, effect) {
         const type = 2
         const turn = this._isNaNTo(parseInt(effect[1]))
         const target = this._isUndefinedTo(SkillRecordFormat.target.get(effect[2]))
@@ -140,12 +143,14 @@ class SkillRecordFormat {
         const num = this._isNaNTo(parseInt(effect[3]))
         const bad = SkillRecordFormat.bad.get(effect[4])
 
-        return this._guardTable(
-            id, category, type, turn, target, range, num, bad
+        const guardRecord = this._guardTable(
+           sid, type, turn, target, range, num, bad
         )
+        SkillRecordFormat.guardId++
+        return guardRecord
     }
 
-    getHealRecord(id, category, effect) {
+    getHealRecord(sid, effect) {
         const type = 3
         const turn = this._isNaNTo(parseInt(effect[1]))
         const season = this._isUndefinedTo(SkillRecordFormat.season.get(effect[2]))
@@ -157,12 +162,15 @@ class SkillRecordFormat {
         const last = effect[7]==="継続"
         const power = SkillRecordFormat.power.get(effect[8])
 
-        return this._healTable(
-            id, category, type, turn, season, element, target, range, num, hpmp, last, power
+        const healRecord = this._healTable(
+            sid, type, turn, season, element, target, range, num, hpmp, last, power
         )
+        SkillRecordFormat.healId++
+        return healRecord
+
     }
 
-    getAssistRecord(id, category, effect) {
+    getAssistRecord(sid, effect) {
         const type = 4
         const turn = this._isNaNTo(parseInt(effect[1]))
         const season = this._isUndefinedTo(SkillRecordFormat.season.get(effect[2]))
@@ -174,23 +182,27 @@ class SkillRecordFormat {
         const power = SkillRecordFormat.power.get(effect[7])
         const buff = SkillRecordFormat.buff.get(effect[8])
 
-        return this._assistTable(
-            id, category, type, turn, season, element, target, range, num, action, power, buff
+        const assistRecord = this._assistTable(
+            sid, type, turn, season, element, target, range, num, action, power, buff
         )
+        SkillRecordFormat.assistId++
+        return assistRecord
     }
 
-    getProvocRecord(id, category, effect) {
+    getProvocRecord(sid, effect) {
         const type = 5
         const target = this._isUndefinedTo(SkillRecordFormat.target.get(effect[1]))
         const range = this._isUndefinedTo(SkillRecordFormat.range.get(effect[2]))
         const num = this._isNaNTo(parseInt(effect[2]))
 
-        return this._provocTable(
-            id, category, type, target, range, num
+        const provocRecord = this._provocTable(
+            sid, type, target, range, num
         )
+        SkillRecordFormat.provocId++
+        return provocRecord
     }
 
-    getDemeritRecord(id, category, effect) {
+    getDemeritRecord(sid, effect) {
         const type = 6
         const turn = this._isNaNTo(parseInt(effect[1]))
         const last = effect[2]==="戦闘終了"
@@ -201,13 +213,23 @@ class SkillRecordFormat {
         const power = SkillRecordFormat.power.get(effect[6])
         const buff = SkillRecordFormat.buff.get(effect[7])
 
-        return this._demeritTable(
-            id, category, type, turn, last, target, range, num, action, power, buff
+        const demeritRecord = this._demeritTable(
+            sid, type, turn, last, target, range, num, action, power, buff
         )
+        SkillRecordFormat.demeritId++
+        return demeritRecord
     }
 
     _isUndefinedTo = (value) => value === undefined ? "" : value
     _isNaNTo = (value) => isNaN(value) ? "" : parseInt(value)
+
+    _resetAttackId = () => SkillRecordFormat.attackId = 0
+    _resetBadId = () => SkillRecordFormat.badId = 0
+    _resetGuardId = () => SkillRecordFormat.guardId = 0
+    _resetHealId = () => SkillRecordFormat.healId = 0
+    _resetAssistId = () => SkillRecordFormat.assistId = 0
+    _resetProvocId = () => SkillRecordFormat.provocId = 0
+    _resetDemeritId = () => SkillRecordFormat.demeritId = 0
 }
 
 SkillRecordFormat.category = new Map([
@@ -296,12 +318,12 @@ SkillRecordFormat.buff = new Map([
     ["ダウン", 1]
 ])
 
-// SkillRecordFormat.attackId = 0
-// SkillRecordFormat.badId = 0
-// SkillRecordFormat.guardId = 0
-// SkillRecordFormat.healId = 0
-// SkillRecordFormat.assistId = 0
-// SkillRecordFormat.provocId = 0
-// SkillRecordFormat.demeritId = 0
+SkillRecordFormat.attackId = 0
+SkillRecordFormat.badId = 0
+SkillRecordFormat.guardId = 0
+SkillRecordFormat.healId = 0
+SkillRecordFormat.assistId = 0
+SkillRecordFormat.provocId = 0
+SkillRecordFormat.demeritId = 0
 
 export default new SkillRecordFormat()
