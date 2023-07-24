@@ -238,15 +238,6 @@ SkillRecordFormat.category = new Map([
     ["通常覚醒", 2],
     ["専用覚醒", 3]
 ])
-SkillRecordFormat.type = new Map([
-    ["attack", 0],
-    ["bad", 1],
-    ["guard", 2],
-    ["heal", 3],
-    ["assist", 4],
-    ["provoc", 5],
-    ["cons", 6]
-])
 SkillRecordFormat.season = new Map([
     ["春", 0],
     ["夏", 1],
