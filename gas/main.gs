@@ -303,8 +303,8 @@ function ranking() {
         if(a.POWER < b.POWER) return 1
       }
       // 攻撃力の降順
-      const aATK = a.AMAXATK || a.MAXATK
-      const bATK = b.AMAXATK || b.MAXATK
+      const aATK = (a.CATEGORY >= 2)? a.AMAXATK : a.MAXATK
+      const bATK = (b.CATEGORY >= 2)? b.AMAXATK : b.MAXATK
       if(aATK !== bATK) {
         if(aATK > bATK) return -1
         if(aATK < bATK) return 1
