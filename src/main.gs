@@ -84,139 +84,115 @@ function ranking() {
   }
 
   // 攻撃力アップのキャラを抽出
-  const assistAtkSidMap = assistBuffMapping("0", "0", "2")
+  const assistAtkSidMap = whereAssistBuff("0", "0", "2")
+
   // 火属性のキャラを抽出
-  const fireCidMap = charaElementMapping("1")
+  const fireCidMap = whereCharaElement("1")
   // 火属性の攻撃アップのキャラを抽出
-  const fireAtkMapped = charaSkillMapping(fireCidMap, assistAtkSidMap, attackSidMap)
+  const fireAtkMapped = fromCharaAssistAttack (fireCidMap, assistAtkSidMap, attackSidMap)
   // 火属性の攻撃力アップのキャラの性能ソート
   strongSort(fireAtkMapped)
 
   // 火、防ダウン
-  const assistDefSidMap = assistBuffMapping("1", "1", "1")
-  const fireDefMapped = charaSkillMapping(fireCidMap, assistDefSidMap, attackSidMap)
+  const assistDefSidMap = whereAssistBuff("1", "1", "1")
+  const fireDefMapped = fromCharaAssistAttack (fireCidMap, assistDefSidMap, attackSidMap)
   strongSort(fireDefMapped)
   // 火、与アップ
-  const assistDmgSidMap = assistBuffMapping("2", "0", "2")
-  const fireDmgMapped = charaSkillMapping(fireCidMap, assistDmgSidMap, attackSidMap)
+  const assistDmgSidMap = whereAssistBuff("2", "0", "2")
+  const fireDmgMapped = fromCharaAssistAttack (fireCidMap, assistDmgSidMap, attackSidMap)
   strongSort(fireDmgMapped)
   // 火、被アップ
-  const assistRevSidMap = assistBuffMapping("3", "0", "1")
-  const fireRevMapped = charaSkillMapping(fireCidMap, assistRevSidMap, attackSidMap)
+  const assistRevSidMap = whereAssistBuff("3", "0", "1")
+  const fireRevMapped = fromCharaAssistAttack (fireCidMap, assistRevSidMap, attackSidMap)
   strongSort(fireRevMapped)
   // 火、クリティカル
-  const assistCriSidMap = assistBuffMapping("4", "0", "2")
-  const fireCriMapped = charaSkillMapping(fireCidMap, assistCriSidMap, attackSidMap)
+  const assistCriSidMap = whereAssistBuff("4", "0", "2")
+  const fireCriMapped = fromCharaAssistAttack (fireCidMap, assistCriSidMap, attackSidMap)
   strongSort(fireCriMapped)
 
   // 水、攻アップ
-  // const assistAtkSidMap = assistBuffMapping("0", "0", "2")
-  const waterCidMap = charaElementMapping("2")
-  const waterAtkMapped = charaSkillMapping(waterCidMap, assistAtkSidMap, attackSidMap)
+  const waterCidMap = whereCharaElement("2")
+  const waterAtkMapped = fromCharaAssistAttack (waterCidMap, assistAtkSidMap, attackSidMap)
   strongSort(waterAtkMapped)
   // 水、防ダウン
-  // const assistDefSidMap = assistBuffMapping("1", "1", "1")
-  const waterDefMapped = charaSkillMapping(waterCidMap, assistDefSidMap, attackSidMap)
+  const waterDefMapped = fromCharaAssistAttack (waterCidMap, assistDefSidMap, attackSidMap)
   strongSort(waterDefMapped)
   // 水、与アップ
-  // const assistDmgSidMap = assistBuffMapping("2", "0", "2")
-  const waterDmgMapped = charaSkillMapping(waterCidMap, assistDmgSidMap, attackSidMap)
+  const waterDmgMapped = fromCharaAssistAttack (waterCidMap, assistDmgSidMap, attackSidMap)
   strongSort(waterDmgMapped)
   // 水、被アップ
-  // const assistRevSidMap = assistBuffMapping("3", "0", "1")
-  const waterRevMapped = charaSkillMapping(waterCidMap, assistRevSidMap, attackSidMap)
+  const waterRevMapped = fromCharaAssistAttack (waterCidMap, assistRevSidMap, attackSidMap)
   strongSort(waterRevMapped)
   // 水、クリティカル
-  // const assistCriSidMap = assistBuffMapping("4", "0", "2")
-  const waterCriMapped = charaSkillMapping(waterCidMap, assistCriSidMap, attackSidMap)
+  const waterCriMapped = fromCharaAssistAttack (waterCidMap, assistCriSidMap, attackSidMap)
   strongSort(waterCriMapped)
 
   // 土、攻アップ
-  // const assistAtkSidMap = assistBuffMapping("0", "0", "2")
-  const earthCidMap = charaElementMapping("3")
-  const earthAtkMapped = charaSkillMapping(earthCidMap, assistAtkSidMap, attackSidMap)
+  const earthCidMap = whereCharaElement("3")
+  const earthAtkMapped = fromCharaAssistAttack (earthCidMap, assistAtkSidMap, attackSidMap)
   strongSort(earthAtkMapped)
   // 土、防ダウン
-  // const assistDefSidMap = assistBuffMapping("1", "1", "1")
-  const earthDefMapped = charaSkillMapping(earthCidMap, assistDefSidMap, attackSidMap)
+  const earthDefMapped = fromCharaAssistAttack (earthCidMap, assistDefSidMap, attackSidMap)
   strongSort(earthDefMapped)
   // 土、与アップ
-  // const assistDmgSidMap = assistBuffMapping("2", "0", "2")
-  const earthDmgMapped = charaSkillMapping(earthCidMap, assistDmgSidMap, attackSidMap)
+  const earthDmgMapped = fromCharaAssistAttack (earthCidMap, assistDmgSidMap, attackSidMap)
   strongSort(earthDmgMapped)
   // 土、被アップ
-  // const assistRevSidMap = assistBuffMapping("3", "0", "1")
-  const earthRevMapped = charaSkillMapping(earthCidMap, assistRevSidMap, attackSidMap)
+  const earthRevMapped = fromCharaAssistAttack (earthCidMap, assistRevSidMap, attackSidMap)
   strongSort(earthRevMapped)
   // 土、クリティカル
-  // const assistCriSidMap = assistBuffMapping("4", "0", "2")
-  const earthCriMapped = charaSkillMapping(earthCidMap, assistCriSidMap, attackSidMap)
+  const earthCriMapped = fromCharaAssistAttack (earthCidMap, assistCriSidMap, attackSidMap)
   strongSort(earthCriMapped)
 
   // 風、攻アップ
-  // const assistAtkSidMap = assistBuffMapping("0", "0", "2")
-  const windCidMap = charaElementMapping("4")
-  const windAtkMapped = charaSkillMapping(windCidMap, assistAtkSidMap, attackSidMap)
+  const windCidMap = whereCharaElement("4")
+  const windAtkMapped = fromCharaAssistAttack (windCidMap, assistAtkSidMap, attackSidMap)
   strongSort(windAtkMapped)
   // 風、防ダウン
-  // const assistDefSidMap = assistBuffMapping("1", "1", "1")
-  const windDefMapped = charaSkillMapping(windCidMap, assistDefSidMap, attackSidMap)
+  const windDefMapped = fromCharaAssistAttack (windCidMap, assistDefSidMap, attackSidMap)
   strongSort(windDefMapped)
   // 風、与アップ
-  // const assistDmgSidMap = assistBuffMapping("2", "0", "2")
-  const windDmgMapped = charaSkillMapping(windCidMap, assistDmgSidMap, attackSidMap)
+  const windDmgMapped = fromCharaAssistAttack (windCidMap, assistDmgSidMap, attackSidMap)
   strongSort(windDmgMapped)
   // 風、被アップ
-  // const assistRevSidMap = assistBuffMapping("3", "0", "1")
-  const windRevMapped = charaSkillMapping(windCidMap, assistRevSidMap, attackSidMap)
+  const windRevMapped = fromCharaAssistAttack (windCidMap, assistRevSidMap, attackSidMap)
   strongSort(windRevMapped)
   // 風、クリティカル
-  // const assistCriSidMap = assistBuffMapping("4", "0", "2")
-  const windCriMapped = charaSkillMapping(windCidMap, assistCriSidMap, attackSidMap)
+  const windCriMapped = fromCharaAssistAttack (windCidMap, assistCriSidMap, attackSidMap)
   strongSort(windCriMapped)
 
   // 光、攻アップ
-  // const assistAtkSidMap = assistBuffMapping("0", "0", "2")
-  const lightCidMap = charaElementMapping("5")
-  const lightAtkMapped = charaSkillMapping(lightCidMap, assistAtkSidMap, attackSidMap)
+  const lightCidMap = whereCharaElement("5")
+  const lightAtkMapped = fromCharaAssistAttack (lightCidMap, assistAtkSidMap, attackSidMap)
   strongSort(lightAtkMapped)
   // 光、防ダウン
-  // const assistDefSidMap = assistBuffMapping("1", "1", "1")
-  const lightDefMapped = charaSkillMapping(lightCidMap, assistDefSidMap, attackSidMap)
+  const lightDefMapped = fromCharaAssistAttack (lightCidMap, assistDefSidMap, attackSidMap)
   strongSort(lightDefMapped)
   // 光、与アップ
-  // const assistDmgSidMap = assistBuffMapping("2", "0", "2")
-  const lightDmgMapped = charaSkillMapping(lightCidMap, assistDmgSidMap, attackSidMap)
+  const lightDmgMapped = fromCharaAssistAttack (lightCidMap, assistDmgSidMap, attackSidMap)
   strongSort(lightDmgMapped)
   // 光、被アップ
-  // const assistRevSidMap = assistBuffMapping("3", "0", "1")
-  const lightRevMapped = charaSkillMapping(lightCidMap, assistRevSidMap, attackSidMap)
+  const lightRevMapped = fromCharaAssistAttack (lightCidMap, assistRevSidMap, attackSidMap)
   strongSort(lightRevMapped)
   // 光、クリティカル
-  // const assistCriSidMap = assistBuffMapping("4", "0", "2")
-  const lightCriMapped = charaSkillMapping(lightCidMap, assistCriSidMap, attackSidMap)
+  const lightCriMapped = fromCharaAssistAttack (lightCidMap, assistCriSidMap, attackSidMap)
   strongSort(lightCriMapped)
 
   // 闇、攻アップ
-  // const assistAtkSidMap = assistBuffMapping("0", "0", "2")
-  const darkCidMap = charaElementMapping("6")
-  const darkAtkMapped = charaSkillMapping(darkCidMap, assistAtkSidMap, attackSidMap)
+  const darkCidMap = whereCharaElement("6")
+  const darkAtkMapped = fromCharaAssistAttack (darkCidMap, assistAtkSidMap, attackSidMap)
   strongSort(darkAtkMapped)
   // 闇、防ダウン
-  // const assistDefSidMap = assistBuffMapping("1", "1", "1")
-  const darkDefMapped = charaSkillMapping(darkCidMap, assistDefSidMap, attackSidMap)
+  const darkDefMapped = fromCharaAssistAttack (darkCidMap, assistDefSidMap, attackSidMap)
   strongSort(darkDefMapped)
   // 闇、与アップ
-  // const assistDmgSidMap = assistBuffMapping("2", "0", "2")
-  const darkDmgMapped = charaSkillMapping(darkCidMap, assistDmgSidMap, attackSidMap)
+  const darkDmgMapped = fromCharaAssistAttack (darkCidMap, assistDmgSidMap, attackSidMap)
   strongSort(darkDmgMapped)
   // 闇、被アップ
-  // const assistRevSidMap = assistBuffMapping("3", "0", "1")
-  const darkRevMapped = charaSkillMapping(darkCidMap, assistRevSidMap, attackSidMap)
+  const darkRevMapped = fromCharaAssistAttack (darkCidMap, assistRevSidMap, attackSidMap)
   strongSort(darkRevMapped)
   // 闇、クリティカル
-  // const assistCriSidMap = assistBuffMapping("4", "0", "2")
-  const darkCriMapped = charaSkillMapping(darkCidMap, assistCriSidMap, attackSidMap)
+  const darkCriMapped = fromCharaAssistAttack (darkCidMap, assistCriSidMap, attackSidMap)
   strongSort(darkCriMapped)
 
 /*** OUTPUT ***/
@@ -336,7 +312,7 @@ function ranking() {
     })
   }
 
-  function charaSkillMapping(elemCidMap, buffSidMap, attackSidMap) {
+  function fromCharaAssistAttack (elemCidMap, buffSidMap, attackSidMap) {
     const charaSkillMapped = skill.reduce((acc, value) => {
       if(!elemCidMap.get(value.CID)) return acc // 対象属性でなければスルー
       if(!buffSidMap.get(value.SID)) return acc // 対象バフスキルでなければスルー
@@ -350,7 +326,7 @@ function ranking() {
     return charaSkillMapped
   }
 
-  function assistBuffMapping(action, buff, target) { // buff(0:アップ, 1:ダウン) target(0:自身, 1:敵, 2:味方)
+  function whereAssistBuff(action, buff, target) { // buff(0:アップ, 1:ダウン) target(0:自身, 1:敵, 2:味方)
     const assistMapped = assist.reduce((acc, a) => {
       if(a.ASST_TARGET === target && (a.ASST_RANGE === "0" || a.ASST_RANGE === "1") && a.ASST_ACTION === action && a.ASST_BUFF === buff){
         return [...acc, {SID:a.SID, TURN:a.ASST_TURN, SEASON:a.ASST_SEASON, ELEM:a.ASST_ELEM, BUFF:a.ASST_POWER}]
@@ -369,7 +345,7 @@ function ranking() {
     return assistSidMap
   }
 
-  function charaElementMapping(elem) {
+  function whereCharaElement(elem) {
     const elementMapped = chara.reduce((acc, c) => {
       if(c.ELEM === elem) {
         return [...acc, {CID:c.CID, NAME:c.NAME, MAXATK:c.MAXATK, AMAXATK:c.AMAXATK}]
