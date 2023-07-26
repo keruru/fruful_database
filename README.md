@@ -4,7 +4,7 @@
 スクリプトは問題なければ残しておきます。<br>
 
 # Usage
-公式ライブラリにあるキャラリストのHTMLデータをchara.htmlにコピペしてからお使いください。
+公式ライブラリにあるキャラリストのHTMLデータを、resource/chara.htmlにコピペしてからお使いください。
 ```
 npm i
 npm run dev

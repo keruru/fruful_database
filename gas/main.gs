@@ -274,7 +274,8 @@ function ranking() {
       let turn = f.TURN
       let effect = `${buff}(${turn}ターン)`
       let power = `${powerMap[f.POWER]}(${rangeMap[f.RANGE]})`
-      return [f.NAME, category, awake, effect, power, f.AMAXATK||f.MAXATK]
+      let maxAtk = (f.CATEGORY >= 2)? f.AMAXATK : f.MAXATK
+      return [f.NAME, category, awake, effect, power, maxAtk]
     })
     return values
   }
