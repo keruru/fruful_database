@@ -328,7 +328,7 @@ function ranking() {
 
   function whereAssistBuff(action, buff, target) { // buff(0:アップ, 1:ダウン) target(0:自身, 1:敵, 2:味方)
     const assistMapped = assist.reduce((acc, a) => {
-      if(a.ASST_TARGET === target && (a.ASST_RANGE === "0" || a.ASST_RANGE === "1") && a.ASST_ACTION === action && a.ASST_BUFF === buff){
+      if(a.ASST_ACTION === action && a.ASST_BUFF === buff && a.ASST_TARGET === target && (a.ASST_RANGE === "0" || a.ASST_RANGE === "1")){
         return [...acc, {SID:a.SID, TURN:a.ASST_TURN, SEASON:a.ASST_SEASON, ELEM:a.ASST_ELEM, BUFF:a.ASST_POWER}]
       }
       return acc
