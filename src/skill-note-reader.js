@@ -165,6 +165,11 @@ skillnoteReader.noteRevise = function(charaId, i_category, note) {
         // ルナ(アートワール) 通常スキル 通常専用スキル
         return note.replace('回復する', '回復させる')
     }
+    if(charaId==='632' && i_category===1) {
+        // ミダレル(4th記念) 進化スキル
+        return note.replace('FCドロップ', 'FCドロップ数')
+    }
+
 }
 
 export default skillnoteReader
