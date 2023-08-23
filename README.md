@@ -4,8 +4,11 @@
 スクリプトは問題なければ残しておきます。<br>
 
 # Usage
-公式ライブラリにあるキャラリストのHTMLデータを、resource/chara.htmlにコピペしてからお使いください。
+インストール
 ```
 npm i
+```
+公式ライブラリにあるキャラリスト(chara.html)の中身を、resource/chara.htmlにコピー＆ペーストしてからお使いください。
+```
 npm run dev
 ```
